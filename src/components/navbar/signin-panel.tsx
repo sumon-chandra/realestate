@@ -1,4 +1,4 @@
-import { LoginLink, RegisterLink, getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { LoginLink, LogoutLink, RegisterLink, getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Button } from "../ui/button";
 
 const SignInPanel = async () => {
@@ -6,7 +6,14 @@ const SignInPanel = async () => {
 	const user = await getUser();
 
 	if (await isAuthenticated()) {
-		return <div>{user?.given_name}</div>;
+		return (
+			<div className="flex items-center justify-start gap-3">
+				<div>{user?.given_name}</div>
+				<Button>
+					<LogoutLink>Logout</LogoutLink>
+				</Button>
+			</div>
+		);
 	}
 
 	return (
