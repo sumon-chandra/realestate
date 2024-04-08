@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
 import NavAvatar from "./nav-avatar";
+import Link from "next/link";
 
 interface Props {
 	user: User;
@@ -39,11 +40,21 @@ const UserProfilePanel: FC<Props> = ({ user }) => {
 			<DropdownMenuContent className="w-56">
 				<DropdownMenuLabel>My Account</DropdownMenuLabel>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem>
-					<Button variant="destructive" className="w-full">
-						<LogoutLink>Logout</LogoutLink>
-					</Button>
-				</DropdownMenuItem>
+				<DropdownMenuGroup className="space-y-2">
+					<DropdownMenuItem>
+						<Link
+							href="/profile"
+							className="font-semibold cursor-pointer"
+						>
+							User profile
+						</Link>
+					</DropdownMenuItem>
+					<DropdownMenuItem className="p-0">
+						<Button size="sm" variant="destructive" className="w-full">
+							<LogoutLink>Logout</LogoutLink>
+						</Button>
+					</DropdownMenuItem>
+				</DropdownMenuGroup>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);
