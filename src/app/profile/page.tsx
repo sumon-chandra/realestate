@@ -2,7 +2,7 @@ import PageTitle from "@/components/page-title";
 import SectionTitle from "@/components/section-title";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import BasicInformation from "./_components/basic-information";
-import { getUserById } from "@/lib/actions/getUserById";
+import { getUserById } from "@/lib/actions/user";
 import ProfileAvatar from "./_components/profile-avatar";
 
 const Profile = async () => {
@@ -17,6 +17,7 @@ const Profile = async () => {
 				<ProfileAvatar
 					picture={dbUser?.avatarUrl!}
 					fallback={dbUser?.firstName?.charAt(0).toUpperCase()}
+					userId={dbUser?.id!}
 				/>
 				<BasicInformation user={dbUser!} />
 			</div>

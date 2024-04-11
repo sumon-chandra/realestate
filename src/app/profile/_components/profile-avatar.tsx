@@ -1,29 +1,54 @@
 "use client";
 
+import { FC, useState } from "react";
+import { Loader2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
-import { FC, useState } from "react";
+import { uploadAvatar } from "@/lib/upload-avatar";
+import { updateUserAvatar } from "@/lib/actions/user";
+import { useRouter } from "next/navigation";
 
 interface Props {
 	picture?: string;
 	fallback?: string;
+	userId: string;
 }
 
-const ProfileAvatar: FC<Props> = ({ picture, fallback }) => {
+const ProfileAvatar: FC<Props> = ({ picture, fallback, userId }) => {
 	const [selectedImg, setSelectedImg] = useState<File>();
+	const [isUpdating, setIsUpdating] = useState(false);
+	const router = useRouter();
+	// console.log({ picture });
+
+	const handleUpdateAvatar = async () => {
+		try {
+			setIsUpdating(true);
+			const avatarUrl = await uploadAvatar(selectedImg!);
+			const data = await updateUserAvatar(avatarUrl, userId);
+			// console.log({ data });
+			setIsUpdating(false);
+			router.refresh();
+		} catch (error) {
+			setIsUpdating(false);
+			console.log("Something went wrong!!");
+		} finally {
+			setIsUpdating(false);
+		}
+	};
+
 	return (
 		<div>
 			<Avatar className="size-40 rounded-full">
-				<AvatarImage src={picture} />
+				<AvatarImage src={picture!} alt="User profile" />
 				<AvatarFallback className="text-9xl">{fallback}</AvatarFallback>
 			</Avatar>
 			<div className="mt-3">
 				<Dialog>
-					<DialogTrigger>
+					<DialogTrigger asChild>
 						<Button size="sm">Change image</Button>
 					</DialogTrigger>
 					<DialogContent>
@@ -35,8 +60,7 @@ const ProfileAvatar: FC<Props> = ({ picture, fallback }) => {
 									type="file"
 									onChange={(e) =>
 										setSelectedImg(
-											(e as any)
-												.target
+											(e as any).target
 												.files[0]
 										)
 									}
@@ -61,7 +85,12 @@ const ProfileAvatar: FC<Props> = ({ picture, fallback }) => {
 									Cancel
 								</Button>
 							</DialogClose>
-							<Button>Save changes</Button>
+							<Button disabled={isUpdating} onClick={handleUpdateAvatar}>
+								{isUpdating && (
+									<Loader2 className="mr-2 h-4 w-4 animate-spin" />
+								)}
+								Save changes
+							</Button>
 						</DialogFooter>
 					</DialogContent>
 				</Dialog>
