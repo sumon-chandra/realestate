@@ -11,7 +11,6 @@ const Profile = async () => {
 	const dbUser = await getUserById(user ? user?.id : "");
 	return (
 		<div className="container">
-			<PageTitle title="Profile" linkCaption="Back to home page" href="/" />
 			<div className="space-y-3 lg:space-y-5">
 				<SectionTitle title="Basic information" />
 				<ProfileAvatar

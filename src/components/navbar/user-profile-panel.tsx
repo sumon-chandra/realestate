@@ -42,11 +42,16 @@ const UserProfilePanel: FC<Props> = ({ user }) => {
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup className="space-y-2">
 					<DropdownMenuItem>
+						<Link href="/profile" className="font-semibold cursor-pointer">
+							Profile
+						</Link>
+					</DropdownMenuItem>
+					<DropdownMenuItem>
 						<Link
-							href="/profile"
+							href="/user/properties"
 							className="font-semibold cursor-pointer"
 						>
-							User profile
+							Properties
 						</Link>
 					</DropdownMenuItem>
 					<DropdownMenuItem className="p-0">
