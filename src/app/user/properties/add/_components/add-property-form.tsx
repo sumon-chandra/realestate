@@ -1,10 +1,12 @@
 "use client";
 import { FC, FormEvent, useState } from "react";
 import Stepper from "./stepper";
-import Basic from "./basic";
+import BasicInfoForm from "./basic-info-form";
 import { PropertyStatus, PropertyType } from "@prisma/client";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import LocationForm from "./location-form";
 
 export interface Props {
 	statuses: PropertyStatus[];
@@ -24,22 +26,20 @@ const AddPropertyForm: FC<Props> = ({ statuses, types }) => {
 		<div className="">
 			<Stepper items={steps} activeItem={step} setActiveItem={setStep} />
 			<form className="w-full lg:w-3/4 mx-auto" onSubmit={handleFormSubmit}>
-				<Basic types={types} statuses={statuses} />
-				<div className="flex items-center justify-end gap-3">
-					<Button
-						size="sm"
-						className="space-x-1"
-						disabled={step === 0}
-						onClick={() => setStep((prev) => prev - 1)}
-					>
-						<ArrowLeft className="size-4" />
-						<span>Previous</span>
-					</Button>
-					<Button size="sm" className="space-x-2" onClick={() => setStep((prev) => prev + 1)}>
-						<span>Next</span>
-						<ArrowRight className="size-4" />
-					</Button>
-				</div>
+				<BasicInfoForm
+					types={types}
+					statuses={statuses}
+					className={cn("hidden", { "block w-full": step === 0 })}
+					prev={() => setStep((prev) => prev - 1)}
+					next={() => setStep((prev) => prev + 1)}
+					step={step}
+				/>
+				<LocationForm
+					className={cn("hidden", { "block w-full": step === 1 })}
+					prev={() => setStep((prev) => prev - 1)}
+					next={() => setStep((prev) => prev + 1)}
+					step={step}
+				/>
 			</form>
 		</div>
 	);

@@ -18,16 +18,29 @@ model User {
 }
 
 model Property {
-  id          Int            @id @default(autoincrement())
+  id          Int               @id @default(autoincrement())
   name        String
   description String
   price       Int
   userId      String
   typeId      Int
   statusId    Int
-  type        PropertyType   @relation(fields: [typeId], references: [id])
-  status      PropertyStatus @relation(fields: [statusId], references: [id])
-  user        User           @relation(fields: [userId], references: [id])
+  type        PropertyType      @relation(fields: [typeId], references: [id])
+  status      PropertyStatus    @relation(fields: [statusId], references: [id])
+  user        User              @relation(fields: [userId], references: [id])
+  location    PropertyLocation?
+}
+
+model PropertyLocation {
+  id         Int      @id @default(autoincrement())
+  street     String
+  city       String
+  state      String
+  zip        String
+  region     String
+  landmark   String
+  propertyId Int      @unique
+  property   Property @relation(fields: [propertyId], references: [id])
 }
 
 model PropertyType {
