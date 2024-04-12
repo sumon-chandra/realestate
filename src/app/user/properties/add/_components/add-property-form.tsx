@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import LocationForm from "./location-form";
+import FeaturesForm from "./features.form";
 
 export interface Props {
 	statuses: PropertyStatus[];
@@ -36,6 +37,12 @@ const AddPropertyForm: FC<Props> = ({ statuses, types }) => {
 				/>
 				<LocationForm
 					className={cn("hidden", { "block w-full": step === 1 })}
+					prev={() => setStep((prev) => prev - 1)}
+					next={() => setStep((prev) => prev + 1)}
+					step={step}
+				/>
+				<FeaturesForm
+					className={cn("hidden", { "block w-full": step === 2 })}
 					prev={() => setStep((prev) => prev - 1)}
 					next={() => setStep((prev) => prev + 1)}
 					step={step}

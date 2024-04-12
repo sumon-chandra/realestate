@@ -29,6 +29,20 @@ model Property {
   status      PropertyStatus    @relation(fields: [statusId], references: [id])
   user        User              @relation(fields: [userId], references: [id])
   location    PropertyLocation?
+  feature     PropertyFeature?
+}
+
+model PropertyFeature {
+  id              Int      @id @default(autoincrement())
+  bedrooms        Int
+  bathrooms       Int
+  parkingSpots    Int
+  area            Int
+  hasSwimmingPool Boolean
+  hasGardenYard   Boolean
+  hasbalcony      Boolean
+  propertyId      Int      @unique
+  property        Property @relation(fields: [propertyId], references: [id])
 }
 
 model PropertyLocation {
