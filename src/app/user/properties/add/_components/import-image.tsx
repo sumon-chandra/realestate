@@ -2,7 +2,7 @@ import { ChangeEvent, FC, useState } from "react";
 import { Props } from "./location-form";
 import FormNextPrevButton from "./form-next-prev-button";
 import { cn } from "@/lib/utils";
-import { Image as ImageIcon } from "lucide-react";
+import { Cross, Image as ImageIcon, X } from "lucide-react";
 import Image from "next/image";
 
 const ImportImage: FC<Props> = ({ next, prev, step, className }) => {
@@ -14,7 +14,13 @@ const ImportImage: FC<Props> = ({ next, prev, step, className }) => {
 			setImportedImage([...importedImage, ...images]);
 		}
 	};
-	console.log(importedImage);
+	// console.log(importedImage);
+
+	const handleDeleteImportedImage = (index: number) => {
+		const newImages = [...importedImage];
+		newImages.splice(index, 1);
+		setImportedImage(newImages);
+	};
 
 	return (
 		<div className={cn("p-5 my-4 border", className)}>
@@ -42,13 +48,19 @@ const ImportImage: FC<Props> = ({ next, prev, step, className }) => {
 					<div className="space-y-3 flex items-center flex-col justify-center">
 						<div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
 							{importedImage.map((image, index) => (
-								<div key={index} className="size-32 relative">
+								<div key={index} className="size-32 relative group">
 									<Image
 										src={URL.createObjectURL(image)}
 										alt="Selected images"
 										fill
 										className="object-contain"
 									/>
+									<div
+										onClick={() => handleDeleteImportedImage(index)}
+										className="lg:invisible group-hover:visible absolute top-0 right-0 p-1 rounded-full border bg-slate-800 backdrop-blur-md cursor-pointer"
+									>
+										<X className="size-3 text-white" />
+									</div>
 								</div>
 							))}
 						</div>
