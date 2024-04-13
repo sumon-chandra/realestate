@@ -30,6 +30,7 @@ model Property {
   user        User              @relation(fields: [userId], references: [id])
   location    PropertyLocation?
   feature     PropertyFeature?
+  images      PropertyImage[]
 }
 
 model PropertyFeature {
@@ -43,6 +44,13 @@ model PropertyFeature {
   hasbalcony      Boolean
   propertyId      Int      @unique
   property        Property @relation(fields: [propertyId], references: [id])
+}
+
+model PropertyImage {
+  id         Int      @id @default(autoincrement())
+  url        String
+  property   Property @relation(fields: [propertyId], references: [id])
+  propertyId Int
 }
 
 model PropertyLocation {
