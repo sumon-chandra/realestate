@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import LocationForm from "./location-form";
 import FeaturesForm from "./features.form";
 import ImportImage from "./import-image";
+import ContactForm from "./contact-form";
 
 export interface Props {
 	statuses: PropertyStatus[];
@@ -50,6 +51,12 @@ const AddPropertyForm: FC<Props> = ({ statuses, types }) => {
 				/>
 				<ImportImage
 					className={cn("hidden", { "block w-full": step === 3 })}
+					prev={() => setStep((prev) => prev - 1)}
+					next={() => setStep((prev) => prev + 1)}
+					step={step}
+				/>
+				<ContactForm
+					className={cn("hidden", { "block w-full": step === 4 })}
 					prev={() => setStep((prev) => prev - 1)}
 					next={() => setStep((prev) => prev + 1)}
 					step={step}
