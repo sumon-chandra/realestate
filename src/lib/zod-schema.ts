@@ -9,7 +9,7 @@ export const AddPropertyFormSchema = z.object({
 	price: z.string({ required_error: "Add property price" }).transform((data: unknown) => Number(data)),
 	type: z.string(),
 	status: z.string(),
-	images: z.array(z.instanceof(File)),
+	images: z.array(z.instanceof(File)).min(1, "Add minimum 1 image!"),
 	location: z.object({
 		street: z.string({ required_error: "You must add street" }),
 		city: z.string({ required_error: "You must add city name" }),
