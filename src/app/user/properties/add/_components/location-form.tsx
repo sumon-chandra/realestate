@@ -1,46 +1,92 @@
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import React, { FC } from "react";
-import FormNextPrevButton from "./form-next-prev-button";
+import React from "react";
+import { useFormContext } from "react-hook-form";
+import { AddPropertyFormType } from "./add-property-form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
-export interface Props {
-	className?: string;
-	next: () => void;
-	prev: () => void;
-	step: number;
-}
-
-const LocationForm: FC<Props> = ({ className, next, prev, step }) => {
+const LocationForm = () => {
+	const { control } = useFormContext<AddPropertyFormType>();
 	return (
-		<div className={cn("p-5 my-4 border space-y-3", className)}>
-			<div className="grid grid-cols-1 items-start lg:grid-cols-2 gap-5">
-				<div className="grid w-full gap-1.5 lg:col-span-1 col-span-2">
-					<Label htmlFor="street">Street</Label>
-					<Input type="text" id="street" placeholder="Street" />
-				</div>
-				<div className="grid w-full gap-1.5 lg:col-span-1 col-span-2">
-					<Label htmlFor="zip">Zip</Label>
-					<Input type="text" id="zip" placeholder="Zip/Postal Code" />
-				</div>
-				<div className="grid w-full gap-1.5 lg:col-span-1 col-span-2">
-					<Label htmlFor="city">City</Label>
-					<Input type="text" id="city" placeholder="City" />
-				</div>
-				<div className="grid w-full gap-1.5 lg:col-span-1 col-span-2">
-					<Label htmlFor="state">State</Label>
-					<Input type="text" id="state" placeholder="State" />
-				</div>
-				<div className="grid w-full gap-1.5 lg:col-span-1 col-span-2">
-					<Label htmlFor="region">Region</Label>
-					<Input type="text" id="region" placeholder="Region" />
-				</div>
-				<div className="grid w-full gap-1.5 lg:col-span-1 col-span-2">
-					<Label htmlFor="landmark">Landmark</Label>
-					<Input type="text" id="landmark" placeholder="Landmark" />
-				</div>
-			</div>
-			<FormNextPrevButton next={next} prev={prev} step={step} />
+		<div className={cn("p-5 my-4 border grid grid-cols-1 lg:grid-cols-3 gap-6")}>
+			<FormField
+				control={control}
+				name="location.street"
+				render={({ field }) => (
+					<FormItem>
+						<FormLabel>Street</FormLabel>
+						<FormControl>
+							<Input placeholder="123 Main Street, Anytown, USA 12345" {...field} />
+						</FormControl>
+						<FormMessage />
+					</FormItem>
+				)}
+			/>
+			<FormField
+				control={control}
+				name="location.zip"
+				render={({ field }) => (
+					<FormItem>
+						<FormLabel>Zip</FormLabel>
+						<FormControl>
+							<Input placeholder="12345" {...field} />
+						</FormControl>
+						<FormMessage />
+					</FormItem>
+				)}
+			/>
+			<FormField
+				control={control}
+				name="location.city"
+				render={({ field }) => (
+					<FormItem>
+						<FormLabel>City</FormLabel>
+						<FormControl>
+							<Input placeholder="Anytown" {...field} />
+						</FormControl>
+						<FormMessage />
+					</FormItem>
+				)}
+			/>
+			<FormField
+				control={control}
+				name="location.state"
+				render={({ field }) => (
+					<FormItem>
+						<FormLabel>State</FormLabel>
+						<FormControl>
+							<Input placeholder="USA" {...field} />
+						</FormControl>
+						<FormMessage />
+					</FormItem>
+				)}
+			/>
+			<FormField
+				control={control}
+				name="location.region"
+				render={({ field }) => (
+					<FormItem>
+						<FormLabel>Region</FormLabel>
+						<FormControl>
+							<Input placeholder="Northeast or Southwest" {...field} />
+						</FormControl>
+						<FormMessage />
+					</FormItem>
+				)}
+			/>
+			<FormField
+				control={control}
+				name="location.landmark"
+				render={({ field }) => (
+					<FormItem>
+						<FormLabel>Landmark</FormLabel>
+						<FormControl>
+							<Input placeholder="Agios Dimitrios 17343, Greece" {...field} />
+						</FormControl>
+						<FormMessage />
+					</FormItem>
+				)}
+			/>
 		</div>
 	);
 };

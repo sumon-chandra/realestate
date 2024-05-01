@@ -42,8 +42,8 @@ const ProfileAvatar: FC<Props> = ({ picture, fallback, userId }) => {
 
 	return (
 		<div>
-			<Avatar className="size-40 rounded-full">
-				<AvatarImage src={picture!} alt="User profile" />
+			<Avatar className="size-40 rounded-full shadow-md">
+				<AvatarImage className="object-contain" src={picture!} alt="User profile" />
 				<AvatarFallback className="text-9xl">{fallback}</AvatarFallback>
 			</Avatar>
 			<div className="mt-3">
@@ -58,20 +58,13 @@ const ProfileAvatar: FC<Props> = ({ picture, fallback, userId }) => {
 								<Input
 									id="picture"
 									type="file"
-									onChange={(e) =>
-										setSelectedImg(
-											(e as any).target
-												.files[0]
-										)
-									}
+									onChange={(e) => setSelectedImg((e as any).target.files[0])}
 								/>
 							</div>
 							<div className="relative mt-6 size-40 border rounded-full mx-auto object-center">
 								{selectedImg && (
 									<Image
-										src={URL.createObjectURL(
-											selectedImg
-										)}
+										src={URL.createObjectURL(selectedImg)}
 										alt="Changing image"
 										fill
 										className="object-contain rounded-full shadow-lg"
@@ -86,9 +79,7 @@ const ProfileAvatar: FC<Props> = ({ picture, fallback, userId }) => {
 								</Button>
 							</DialogClose>
 							<Button disabled={isUpdating} onClick={handleUpdateAvatar}>
-								{isUpdating && (
-									<Loader2 className="mr-2 h-4 w-4 animate-spin" />
-								)}
+								{isUpdating && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
 								Save changes
 							</Button>
 						</DialogFooter>

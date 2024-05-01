@@ -1,83 +1,111 @@
+"use client";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { PropertyStatus, PropertyType } from "@prisma/client";
 import { FC } from "react";
 import { cn } from "@/lib/utils";
-import FormNextPrevButton from "./form-next-prev-button";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { useFormContext } from "react-hook-form";
+import { AddPropertyFormType } from "./add-property-form";
 
 interface Props {
 	statuses: PropertyStatus[];
 	types: PropertyType[];
-	next: () => void;
-	prev: () => void;
-	step: number;
-	className?: string;
 }
 
-const BasicInfoForm: FC<Props> = ({ statuses, types, className, next, prev, step }) => {
+const BasicInfoForm: FC<Props> = ({ statuses, types }) => {
+	const { control } = useFormContext<AddPropertyFormType>();
+
 	return (
-		<div className={cn("p-5 my-4 border space-y-3", className)}>
-			<div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-				<div className="grid w-full items-center gap-1.5 lg:col-span-3">
-					<Label htmlFor="name">Property name</Label>
-					<Input type="name" id="name" placeholder="Name" />
-				</div>
-				<div className="grid w-full gap-1.5 lg:col-span-3">
-					<Label htmlFor="description">Description</Label>
-					<Textarea placeholder="Type your property description here." id="description" />
-				</div>
-				<div className="col-span-1">
-					<p className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-1.5">
-						Type
-					</p>
-					<Select>
-						<SelectTrigger>
-							<SelectValue placeholder="Select property type" />
-						</SelectTrigger>
-						<SelectContent className="border-primary">
-							<SelectGroup className="w-full">
-								<SelectLabel>Types</SelectLabel>
+		<div className={cn("p-5 my-4 border grid grid-cols-1 lg:grid-cols-3 gap-6")}>
+			<FormField
+				control={control}
+				name="name"
+				render={({ field }) => (
+					<FormItem className="col-span-3">
+						<FormLabel>Property name</FormLabel>
+						<FormControl>
+							<Input placeholder="Add property name" {...field} />
+						</FormControl>
+						<FormMessage />
+					</FormItem>
+				)}
+			/>
+			<FormField
+				control={control}
+				name="description"
+				render={({ field }) => (
+					<FormItem className="col-span-3">
+						<FormLabel>Property description</FormLabel>
+						<FormControl>
+							<Textarea
+								placeholder="Describe your property details..."
+								className="resize-none"
+								{...field}
+							/>
+						</FormControl>
+						<FormMessage />
+					</FormItem>
+				)}
+			/>
+			<FormField
+				control={control}
+				name="type"
+				render={({ field }) => (
+					<FormItem className="col-span-1">
+						<FormLabel>Type</FormLabel>
+						<Select onValueChange={field.onChange} defaultValue={field.value}>
+							<FormControl>
+								<SelectTrigger>
+									<SelectValue placeholder="Select property type" />
+								</SelectTrigger>
+							</FormControl>
+							<SelectContent>
 								{types.map((type) => (
-									<SelectItem key={type.id} value={type.id.toString()}>
+									<SelectItem value={type.id.toString()} key={type.id}>
 										{type.value}
 									</SelectItem>
 								))}
-							</SelectGroup>
-						</SelectContent>
-					</Select>
-				</div>
-				<div className="col-span-1">
-					<p className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-1.5">
-						Condition
-					</p>
-					<Select>
-						<SelectTrigger>
-							<SelectValue placeholder="Property condition" />
-						</SelectTrigger>
-						<SelectContent className="border-primary">
-							<SelectGroup>
-								<SelectLabel>Statuses</SelectLabel>
+							</SelectContent>
+						</Select>
+					</FormItem>
+				)}
+			/>
+			<FormField
+				control={control}
+				name="status"
+				render={({ field }) => (
+					<FormItem className="col-span-1">
+						<FormLabel>Status</FormLabel>
+						<Select onValueChange={field.onChange} defaultValue={field.value}>
+							<FormControl>
+								<SelectTrigger>
+									<SelectValue placeholder="Select property type" />
+								</SelectTrigger>
+							</FormControl>
+							<SelectContent>
 								{statuses.map((status) => (
-									<SelectItem
-										className="hover:bg-slate-500"
-										key={status.id}
-										value={status.id.toString()}
-									>
+									<SelectItem value={status.id.toString()} key={status.id}>
 										{status.value}
 									</SelectItem>
 								))}
-							</SelectGroup>
-						</SelectContent>
-					</Select>
-				</div>
-				<div className="grid w-full items-center gap-1.5 col-span-1">
-					<Label htmlFor="price">Price</Label>
-					<Input type="number" id="price" placeholder="Price" />
-				</div>
-			</div>
-			<FormNextPrevButton next={next} prev={prev} step={step} />
+							</SelectContent>
+						</Select>
+					</FormItem>
+				)}
+			/>
+			<FormField
+				control={control}
+				name="price"
+				render={({ field }) => (
+					<FormItem className="col-span-1">
+						<FormLabel>Property price</FormLabel>
+						<Input type="number" min={100} placeholder="Add property price" {...field} />
+						<FormMessage />
+					</FormItem>
+				)}
+			/>
 		</div>
 	);
 };

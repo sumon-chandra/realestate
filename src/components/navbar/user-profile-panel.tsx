@@ -30,10 +30,7 @@ const UserProfilePanel: FC<Props> = ({ user }) => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button
-					variant="outline"
-					className="rounded-full px-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-				>
+				<Button variant="outline" className="rounded-full px-0 focus-visible:ring-0 focus-visible:ring-offset-0">
 					<NavAvatar picture={user?.avatarUrl!} />
 				</Button>
 			</DropdownMenuTrigger>
@@ -42,15 +39,12 @@ const UserProfilePanel: FC<Props> = ({ user }) => {
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup className="space-y-2">
 					<DropdownMenuItem>
-						<Link href="/profile" className="font-semibold cursor-pointer">
+						<Link href="/user/profile" className="font-semibold cursor-pointer">
 							Profile
 						</Link>
 					</DropdownMenuItem>
 					<DropdownMenuItem>
-						<Link
-							href="/user/properties"
-							className="font-semibold cursor-pointer"
-						>
+						<Link href="/user/properties" className="font-semibold cursor-pointer">
 							Properties
 						</Link>
 					</DropdownMenuItem>

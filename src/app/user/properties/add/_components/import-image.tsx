@@ -1,17 +1,25 @@
-import { ChangeEvent, FC, useState } from "react";
-import { Props } from "./location-form";
-import FormNextPrevButton from "./form-next-prev-button";
+import { ChangeEvent, useState } from "react";
 import { cn } from "@/lib/utils";
-import { Cross, Image as ImageIcon, X } from "lucide-react";
+import { Image as ImageIcon, ImagePlus, X } from "lucide-react";
 import Image from "next/image";
+import { useFormContext } from "react-hook-form";
+import { AddPropertyFormType } from "./add-property-form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 
-const ImportImage: FC<Props> = ({ next, prev, step, className }) => {
+const ImportImage = () => {
 	const [importedImage, setImportedImage] = useState<File[]>([]);
+	const {
+		control,
+		register,
+		formState: { errors },
+	} = useFormContext<AddPropertyFormType>();
 
-	const handleImportImage = (e: ChangeEvent<HTMLInputElement>) => {
+	const handleImportImage = (e: ChangeEvent<HTMLInputElement>, onChange: (...event: any[]) => void) => {
 		if (e?.target?.files) {
 			const images = Array.from(e.target.files);
 			setImportedImage([...importedImage, ...images]);
+			onChange(images);
 		}
 	};
 	// console.log(importedImage);
@@ -23,25 +31,33 @@ const ImportImage: FC<Props> = ({ next, prev, step, className }) => {
 	};
 
 	return (
-		<div className={cn("p-5 my-4 border", className)}>
+		<div className={cn("p-5 my-4 border")}>
+			<FormField
+				control={control}
+				name="images"
+				render={({ field }) => (
+					<FormItem>
+						<FormControl>
+							<Input
+								id="images"
+								type="file"
+								onChange={(e) => handleImportImage(e, field.onChange)}
+								className="hidden"
+								multiple
+							/>
+						</FormControl>
+					</FormItem>
+				)}
+			/>
 			<div className="my-7">
-				<input
-					type="file"
-					name="images"
-					id="images"
-					onChange={handleImportImage}
-					className="sr-only"
-					accept="image/*"
-					multiple
-				/>
 				{importedImage.length === 0 ? (
 					<label
 						htmlFor="images"
-						className="w-11/12 lg:size-52 mx-auto border hover:bg-slate-100 rounded-md shadow-sm flex items-center justify-center cursor-pointer"
+						className="size-48 lg:size-52 mx-auto border hover:bg-slate-100 rounded-md shadow-sm flex items-center justify-center cursor-pointer"
 					>
-						<div className="space-x-2 flex items-center justify-center gap-2">
-							<ImageIcon />
-							<h3 className="font-semibold">Import image</h3>
+						<div className="space-x-2 flex flex-col items-center justify-center gap-2">
+							<ImagePlus />
+							<span className="font-semibold">Import image</span>
 						</div>
 					</label>
 				) : (
@@ -61,6 +77,7 @@ const ImportImage: FC<Props> = ({ next, prev, step, className }) => {
 									>
 										<X className="size-3 text-white" />
 									</div>
+									{errors && <p>Image field can not be empty.</p>}
 								</div>
 							))}
 						</div>
@@ -70,7 +87,6 @@ const ImportImage: FC<Props> = ({ next, prev, step, className }) => {
 					</div>
 				)}
 			</div>
-			<FormNextPrevButton next={next} prev={prev} step={step} />
 		</div>
 	);
 };

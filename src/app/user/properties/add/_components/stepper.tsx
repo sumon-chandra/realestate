@@ -13,8 +13,8 @@ const Stepper: FC<Props> = ({ className, activeItem, items, setActiveItem }) => 
 	return (
 		<div className={cn("flex items-center justify-between gap-2", className)}>
 			{items.map((item, index) => (
-				<>
-					<div key={item.label} className="relative flex flex-col items-center">
+				<div key={item.label} className="relative">
+					<div className="flex flex-col items-center">
 						<div
 							className={cn(
 								"rounded-full size-6 flex items-center justify-center transition-all text-white",
@@ -49,7 +49,7 @@ const Stepper: FC<Props> = ({ className, activeItem, items, setActiveItem }) => 
 							/>
 						)}
 					</div>
-				</>
+				</div>
 			))}
 		</div>
 	);
