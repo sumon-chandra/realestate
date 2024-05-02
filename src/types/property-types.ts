@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 
-export type AddPropertyFullType = Prisma.PropertyGetPayload<{
+export type PropertyFullType = Prisma.PropertyGetPayload<{
 	include: {
 		feature: true;
 		images: true;
