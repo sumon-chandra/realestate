@@ -29,7 +29,8 @@ model Property {
   status      PropertyStatus    @relation(fields: [statusId], references: [id])
   user        User              @relation(fields: [userId], references: [id])
   location    PropertyLocation?
-  feature     PropertyFeature?
+  features    PropertyFeature?
+  contact     PropertyContact?
   images      PropertyImage[]
 }
 
@@ -37,13 +38,23 @@ model PropertyFeature {
   id              Int      @id @default(autoincrement())
   bedrooms        Int
   bathrooms       Int
-  parkingSpots    Int
-  area            Int
-  hasSwimmingPool Boolean
-  hasGardenYard   Boolean
-  hasbalcony      Boolean
+  parkingSpots    Int?
+  area            Int?
+  hasSwimmingPool Boolean?
+  hasGardenYard   Boolean?
+  hasBalcony      Boolean?
   propertyId      Int      @unique
   property        Property @relation(fields: [propertyId], references: [id])
+}
+
+model PropertyContact {
+  id               Int      @id @default(autoincrement())
+  phone            String
+  email            String
+  whatsapp         String?
+  facebookUsername String?
+  propertyId       Int      @unique
+  property         Property @relation(fields: [propertyId], references: [id])
 }
 
 model PropertyImage {
@@ -57,10 +68,10 @@ model PropertyLocation {
   id         Int      @id @default(autoincrement())
   street     String
   city       String
-  state      String
-  zip        String
-  region     String
-  landmark   String
+  state      String?
+  zip        String?
+  region     String?
+  landmark   String?
   propertyId Int      @unique
   property   Property @relation(fields: [propertyId], references: [id])
 }

@@ -18,6 +18,9 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
 import { uploadPropertyImages } from "@/lib/upload-property-images";
+import { saveProperty } from "@/lib/actions/property";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { useRouter } from "next/navigation";
 
 export interface Props {
 	statuses: PropertyStatus[];
@@ -30,25 +33,27 @@ export type FieldName = keyof AddPropertyFormType;
 const AddPropertyForm: FC<Props> = ({ statuses, types }) => {
 	const [step, setStep] = useState(0);
 	const [isLastStep, setIsLastStep] = useState(false);
+	const { user } = useKindeBrowserClient();
+	const router = useRouter();
 
 	const form = useForm<AddPropertyFormType>({
 		resolver: zodResolver(AddPropertyFormSchema),
 	});
 
-	const { mutate, isPending, isError, error, data, isSuccess } = useMutation({
-		mutationFn: (newProperty: AddPropertyFormType) => {
-			return axios.post("/api/property/add/", newProperty);
-		},
-	});
-
 	const onSubmit: SubmitHandler<AddPropertyFormType> = async (data) => {
 		// console.log({ data });
-		const imageUrls = await uploadPropertyImages(data?.images);
-		if (imageUrls?.length! > 0) {
-			console.log(imageUrls);
-		}
+		const { images, ...propertyInfo } = data;
+		const imageUrls = await uploadPropertyImages(images);
+		console.log(imageUrls);
 
-		// mutate(data);
+		if (imageUrls && user) {
+			try {
+				await saveProperty(propertyInfo, imageUrls, user?.id);
+				router.push("/user/properties");
+			} catch (error) {
+				console.log("Failed to save property in database: " + error);
+			}
+		}
 	};
 
 	const next = async () => {
@@ -74,16 +79,6 @@ const AddPropertyForm: FC<Props> = ({ statuses, types }) => {
 		}
 	};
 
-	useEffect(() => {
-		if (isSuccess) {
-			toast("Property added!");
-			console.log({ data });
-		}
-		if (error) {
-			console.log({ error });
-		}
-	}, [data, error, isSuccess]);
-
 	return (
 		<>
 			<div className="">
@@ -99,7 +94,6 @@ const AddPropertyForm: FC<Props> = ({ statuses, types }) => {
 						</form>
 					</Form>
 				</FormProvider>
-				{isLastStep && isPending && <p>Loading</p>}
 				<FormNextPrevButton next={next} prev={prev} step={step} isLast={isLastStep} />
 			</div>
 

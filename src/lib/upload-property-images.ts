@@ -15,12 +15,8 @@ export async function uploadPropertyImages(files: File[]) {
 		);
 
 		const urls = data.map((image) => {
-			if (image.data) {
-				const url = supabase.storage.from("property-images").getPublicUrl(image?.data?.path ?? "").data?.publicUrl;
-				return url;
-			} else {
-				return image.error;
-			}
+			const url = supabase.storage.from("property-images").getPublicUrl(image?.data?.path ?? "").data?.publicUrl;
+			return url;
 		});
 
 		return urls;
