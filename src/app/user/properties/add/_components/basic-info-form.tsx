@@ -47,11 +47,11 @@ const BasicInfoForm: FC<Props> = ({ statuses, types }) => {
 				/>
 				<FormField
 					control={control}
-					name="type"
+					name="typeId"
 					render={({ field }) => (
 						<FormItem className="col-span-1">
 							<FormLabel>Type</FormLabel>
-							<Select onValueChange={field.onChange} defaultValue={field.value}>
+							<Select onValueChange={field.onChange}>
 								<FormControl>
 									<SelectTrigger>
 										<SelectValue placeholder="Select property type" />
@@ -63,6 +63,9 @@ const BasicInfoForm: FC<Props> = ({ statuses, types }) => {
 											{type.value}
 										</SelectItem>
 									))}
+									{/* <SelectItem value="condo">Condo</SelectItem>
+									<SelectItem value="apartment">Apartment</SelectItem>
+									<SelectItem value="villa">Villa</SelectItem> */}
 								</SelectContent>
 							</Select>
 						</FormItem>
@@ -70,11 +73,11 @@ const BasicInfoForm: FC<Props> = ({ statuses, types }) => {
 				/>
 				<FormField
 					control={control}
-					name="status"
+					name="statusId"
 					render={({ field }) => (
 						<FormItem className="col-span-1">
 							<FormLabel>Status</FormLabel>
-							<Select onValueChange={field.onChange} defaultValue={field.value}>
+							<Select onValueChange={field.onChange}>
 								<FormControl>
 									<SelectTrigger>
 										<SelectValue placeholder="Select property type" />
@@ -86,6 +89,10 @@ const BasicInfoForm: FC<Props> = ({ statuses, types }) => {
 											{status.value}
 										</SelectItem>
 									))}
+									{/* 
+									<SelectItem value="under-contract">Under Contract</SelectItem>
+									<SelectItem value="for-sell">For Sell</SelectItem>
+									<SelectItem value="sold">Sold</SelectItem> */}
 								</SelectContent>
 							</Select>
 						</FormItem>

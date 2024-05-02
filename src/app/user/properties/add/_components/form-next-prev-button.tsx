@@ -16,7 +16,7 @@ const FormNextPrevButton: FC<Props> = ({ next, prev, step, isLast }) => {
 				<ArrowLeft className="size-4" />
 				<span>Previous</span>
 			</Button>
-			<Button type={isLast ? "submit" : "button"} size="sm" className="space-x-2" onClick={next}>
+			<Button size="sm" className="space-x-2" onClick={next}>
 				<span>{isLast ? "Submit" : "Next"}</span>
 				<ArrowRight className="size-4" />
 			</Button>

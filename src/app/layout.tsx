@@ -4,6 +4,8 @@ import "./globals.css";
 import Navbar from "@/components/navbar/navbar";
 import SignInPanel from "@/components/navbar/signin-panel";
 import Progressbar from "@/components/progressbar";
+import Provider from "@/components/provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,13 +21,16 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={inter.className}>
-				<Progressbar />
-				<Navbar>
-					<SignInPanel />
-				</Navbar>
-				{children}
-			</body>
+			<Provider>
+				<body className={inter.className}>
+					<Progressbar />
+					<Toaster />
+					<Navbar>
+						<SignInPanel />
+					</Navbar>
+					{children}
+				</body>
+			</Provider>
 		</html>
 	);
 }

@@ -1,5 +1,5 @@
 export const steps = [
-	{ id: 1, label: "Basic", fields: ["name", "description", "type", "status", "price"] },
+	{ id: 1, label: "Basic", fields: ["name", "description", "typeId", "statusId", "price"] },
 	{
 		id: 2,
 		label: "Location",

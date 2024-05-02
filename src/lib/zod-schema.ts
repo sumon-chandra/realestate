@@ -7,8 +7,8 @@ export const AddPropertyFormSchema = z.object({
 		message: "Property name must be at least 4 characters!",
 	}),
 	price: z.string({ required_error: "Add property price" }).transform((data: unknown) => Number(data)),
-	type: z.string(),
-	status: z.string(),
+	typeId: z.string().transform((data: unknown) => Number(data)),
+	statusId: z.string().transform((data: unknown) => Number(data)),
 	images: z.array(z.instanceof(File)).min(1, "Add minimum 1 image!"),
 	location: z.object({
 		street: z.string({ required_error: "You must add street" }),
