@@ -8,9 +8,15 @@ interface Props {
 
 const PropertyImage: FC<Props> = ({ image }) => {
 	return (
-		<>
-			<Image alt="Property image" src={image.url} width={350} height={100} className="object-cover" />
-		</>
+		<div className="max-h-48 overflow-hidden group transition-all">
+			<Image
+				alt="Property image"
+				src={image.url}
+				width={350}
+				height={100}
+				className="object-cover group-hover:scale-105 duration-500 cursor-pointer"
+			/>
+		</div>
 	);
 };
 

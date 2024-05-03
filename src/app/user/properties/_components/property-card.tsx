@@ -2,6 +2,8 @@ import { PropertyFullType } from "@/types/property-types";
 import { FC } from "react";
 import ImageCarousel from "./image-carousel";
 import PropertyImage from "./property-image";
+import { Card, CardContent, CardDescription, CardFooter, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface Props {
 	property: PropertyFullType;
@@ -11,15 +13,23 @@ const PropertyCard: FC<Props> = ({ property }) => {
 	// console.log(property);
 
 	return (
-		<div className="space-y-2 p-5 rounded shadow bg-neutral-100 w-full">
+		<Card className="shadow">
 			{property?.images.length === 1 ? (
 				<PropertyImage image={property.images[0]} />
 			) : (
 				<ImageCarousel images={property.images} />
 			)}
-			<h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">{property.name}</h3>
-			<p className="leading-7 [&:not(:first-child)]:mt-6">{property.description}</p>
-		</div>
+			<CardContent className="px-6 py-3 space-y-1">
+				<CardTitle className="text-lg font-semibold tracking-tight">{property.name}</CardTitle>
+				<CardDescription className="truncate">{property.description}</CardDescription>
+				<h4 className="text-xl font-semibold tracking-tight">$ {property.price}</h4>
+			</CardContent>
+			<CardFooter>
+				<Button className="w-full" size="sm">
+					See more
+				</Button>
+			</CardFooter>
+		</Card>
 	);
 };
 

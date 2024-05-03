@@ -14,8 +14,14 @@ const ImageCarousel: FC<Props> = ({ images }) => {
 		<Carousel className="w-full group">
 			<CarouselContent>
 				{images?.map((image) => (
-					<CarouselItem key={image.id} className="overflow-hidden">
-						<Image alt="Property image" src={image.url} width={350} height={100} className="object-cover" />
+					<CarouselItem key={image.id} className="max-h-48 overflow-hidden transition-all">
+						<Image
+							alt="Property image"
+							src={image.url}
+							width={350}
+							height={100}
+							className="object-cover group-hover:scale-105 duration-500 cursor-pointer"
+						/>
 					</CarouselItem>
 				))}
 			</CarouselContent>
