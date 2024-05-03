@@ -3,6 +3,7 @@
 import { PropertyFullType } from "@/types/property-types";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import PropertyCard from "./property-card";
 
 const PropertyList = () => {
 	const {
@@ -17,12 +18,9 @@ const PropertyList = () => {
 		},
 	});
 	return (
-		<div className="grid grid-cols-4 gap-5">
+		<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
 			{properties?.map((property) => (
-				<div key={property.id} className="space-y-2 p-5 rounded shadow bg-neutral-100">
-					<h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">{property.name}</h3>
-					<p className="leading-7 [&:not(:first-child)]:mt-6">{property.description}</p>
-				</div>
+				<PropertyCard key={property.id} property={property} />
 			))}
 		</div>
 	);

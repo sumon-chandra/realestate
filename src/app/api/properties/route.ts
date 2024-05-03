@@ -4,7 +4,14 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
 	try {
-		const properties = await prisma.property.findMany();
+		const properties = await prisma.property.findMany({
+			include: {
+				features: true,
+				images: true,
+				location: true,
+				contact: true,
+			},
+		});
 		return NextResponse.json(properties);
 	} catch (e) {
 		const error = e as AxiosError;
