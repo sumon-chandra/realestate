@@ -8,8 +8,6 @@ interface Props {
 }
 
 const ImageCarousel: FC<Props> = ({ images }) => {
-	console.log({ images });
-
 	return (
 		<Carousel className="w-full group">
 			<CarouselContent>

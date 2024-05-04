@@ -4,6 +4,7 @@ import ImageCarousel from "./image-carousel";
 import PropertyImage from "./property-image";
 import { Card, CardContent, CardDescription, CardFooter, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 interface Props {
 	property: PropertyFullType;
@@ -25,8 +26,8 @@ const PropertyCard: FC<Props> = ({ property }) => {
 				<h4 className="text-xl font-semibold tracking-tight">$ {property.price}</h4>
 			</CardContent>
 			<CardFooter>
-				<Button className="w-full" size="sm">
-					See more
+				<Button asChild className="w-full" size="sm">
+					<Link href={`/user/properties/${property.id}`}>See more</Link>
 				</Button>
 			</CardFooter>
 		</Card>

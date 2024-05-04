@@ -9,7 +9,7 @@ const AddPropertyPage = async () => {
 	]);
 	return (
 		<>
-			<PageTitle title="Add property" />
+			<PageTitle title="All properties" />
 			<main className="container">
 				<AddPropertyForm types={propertyTypes} statuses={propertyStatuses} />
 			</main>
