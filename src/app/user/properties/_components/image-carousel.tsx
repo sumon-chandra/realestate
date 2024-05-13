@@ -2,12 +2,14 @@ import { PropertyImage } from "@prisma/client";
 import { FC } from "react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 interface Props {
 	images: PropertyImage[];
+	fill?: boolean;
 }
 
-const ImageCarousel: FC<Props> = ({ images }) => {
+const ImageCarousel: FC<Props> = ({ images, fill }) => {
 	return (
 		<Carousel className="w-full group">
 			<CarouselContent>
@@ -16,9 +18,11 @@ const ImageCarousel: FC<Props> = ({ images }) => {
 						<Image
 							alt="Property image"
 							src={image.url}
-							width={350}
-							height={100}
-							className="object-cover group-hover:scale-105 duration-500 cursor-pointer"
+							{...(fill ? { fill } : { width: 300, height: 250 })}
+							className={cn({
+								"group-hover:scale-105 duration-500 cursor-pointer": fill === false,
+								"object-cover": fill === true,
+							})}
 						/>
 					</CarouselItem>
 				))}

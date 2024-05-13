@@ -10,7 +10,7 @@ const PropertiesPage = () => {
 			<PageTitle title="All properties" linkCaption="add property" LinkCaptionIcon={Plus} href="/user/properties/add" />
 			<main className="container">
 				<div className="mt-10">
-					<Suspense fallback={<p>Loading...</p>}>
+					<Suspense fallback={<PropertyCardSkeleton />}>
 						<PropertyList />
 					</Suspense>
 				</div>

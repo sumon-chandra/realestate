@@ -12,6 +12,7 @@ export async function getProperty(id: number) {
 				features: true,
 				contact: true,
 				location: true,
+				images: true,
 			},
 		});
 		if (!property) {
